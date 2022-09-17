@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
 import { BsInstagram } from "react-icons/bs";
@@ -28,7 +28,7 @@ const Nav = () => {
       </section>
       <section>
         {status === "authenticated" ? (
-          <button>Sign out</button>
+          <button onClick={() => signOut()}>Sign out</button>
         ) : (
           <>
             <button
