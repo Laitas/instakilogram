@@ -1,7 +1,8 @@
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
 import { BsInstagram } from "react-icons/bs";
+import UserDropdown from "./UserDropdown";
 const SignIn = dynamic(() => import("./SignIn"), {
   suspense: true,
 });
@@ -21,14 +22,14 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 flex justify-between px-6 py-4 bg-white w-full">
+    <nav className="sticky top-0 flex justify-between px-6 py-4 bg-white w-full shadow">
       <section className="flex gap-4 items-center">
         <BsInstagram className="w-8 h-8" />
         <span className="font-semibold">The Gram</span>
       </section>
-      <section>
+      <section className={status === "loading" ? "invisible" : ""}>
         {status === "authenticated" ? (
-          <button onClick={() => signOut()}>Sign out</button>
+          <UserDropdown />
         ) : (
           <>
             <button

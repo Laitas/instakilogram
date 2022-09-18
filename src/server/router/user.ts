@@ -15,8 +15,6 @@ export const userRouter = createRouter()
       password: z.string().min(6),
     }),
     async resolve({ ctx, input }) {
-      console.log(input);
-
       return await ctx.prisma.user.create({
         data: {
           email: input?.email,
@@ -32,8 +30,6 @@ export const userRouter = createRouter()
       password: z.string().min(6),
     }),
     async resolve({ ctx, input }) {
-      console.log(input);
-
       const user = await ctx.prisma.user.findUnique({
         where: {
           email: input.email,
