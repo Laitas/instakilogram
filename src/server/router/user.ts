@@ -8,6 +8,30 @@ const hashPassword = (password: string) => {
 };
 
 export const userRouter = createRouter()
+  .query("get", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: input?.id,
+        },
+      });
+      if (user) {
+        return {
+          id: user.id,
+          image: user.image,
+          name: user.name,
+        };
+      } else {
+        throw new trpc.TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+    },
+  })
   .mutation("signup", {
     input: z.object({
       email: z.string().min(1),
