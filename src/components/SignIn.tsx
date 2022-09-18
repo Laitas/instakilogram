@@ -7,13 +7,13 @@ const SignInModal = ({ closeModal }: { closeModal: () => void }) => {
   const [error, setError] = useState("");
   const { mutate: mutateSignIn } = trpc.useMutation("user.checkCredentials", {
     onSuccess: async (data) => {
-      await signIn("credentials", { ...data, callbackUrl: "/" });
+      await signIn("credentials", { ...data });
     },
     onError: (error) => setError(error.message),
   });
   const { mutate: mutateSignUp } = trpc.useMutation("user.signup", {
     onSuccess: async (data) => {
-      await signIn("credentials", { ...data, callbackUrl: "/" });
+      await signIn("credentials", { ...data });
     },
     onError: (error) => setError(error.message),
   });
