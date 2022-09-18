@@ -3,7 +3,7 @@ import useOnClickOutside from "../hooks/useOutsideClick";
 import { trpc } from "../utils/trpc";
 import { signIn } from "next-auth/react";
 
-const signInModal = ({ closeModal }: { closeModal: () => void }) => {
+const SignInModal = ({ closeModal }: { closeModal: () => void }) => {
   const [error, setError] = useState("");
   const { mutate: mutateSignIn } = trpc.useMutation("user.checkCredentials", {
     onSuccess: async (data) => {
@@ -65,7 +65,7 @@ const signInModal = ({ closeModal }: { closeModal: () => void }) => {
             </form>
             {error && <p className="text-red-500">{error}</p>}
             <p>
-              Don't have an account yet?{" "}
+              {"Don't"} have an account yet?{" "}
               <button
                 className="text-blue-400 hover:text-blue-700 transition-colors"
                 onClick={() => setSignIn(false)}
@@ -131,7 +131,7 @@ const signInModal = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default signInModal;
+export default SignInModal;
 
 type signIn = {
   name: string;

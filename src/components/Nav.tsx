@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { BsInstagram } from "react-icons/bs";
 import UserDropdown from "./UserDropdown";
@@ -23,10 +24,12 @@ const Nav = () => {
 
   return (
     <nav className="sticky top-0 flex justify-between px-6 py-4 bg-white w-full shadow">
-      <section className="flex gap-4 items-center">
-        <BsInstagram className="w-8 h-8" />
-        <span className="font-semibold">The Gram</span>
-      </section>
+      <Link href={"/"}>
+        <a className="flex gap-4 items-center">
+          <BsInstagram className="w-8 h-8" />
+          <span className="font-semibold">The Gram</span>
+        </a>
+      </Link>
       <section className={status === "loading" ? "invisible" : ""}>
         {status === "authenticated" ? (
           <UserDropdown />

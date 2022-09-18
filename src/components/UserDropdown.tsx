@@ -17,6 +17,7 @@ const UserDropdown = () => {
           width={30}
           height={30}
           className="rounded-full"
+          alt="User profile picture"
         />
       </button>
       <section
