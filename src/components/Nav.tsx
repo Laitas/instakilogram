@@ -3,19 +3,24 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { BsInstagram } from "react-icons/bs";
+import { AiOutlineUpload } from "react-icons/ai";
 import UserDropdown from "./UserDropdown";
 const SignIn = dynamic(() => import("./SignIn"), {
   suspense: true,
 });
+const UploadModal = dynamic(() => import("./UploadModal"), {
+  suspense: true,
+});
 const Nav = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<"none" | "signin" | "upload">("none");
   const { status } = useSession();
+  console.log(open);
 
   useEffect(() => {
     const useEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         window.document.body.style.overflow = "auto";
-        setOpen(false);
+        setOpen("none");
       }
     };
     window.addEventListener("keydown", useEsc);
@@ -32,22 +37,42 @@ const Nav = () => {
       </Link>
       <section className={status === "loading" ? "invisible" : ""}>
         {status === "authenticated" ? (
-          <UserDropdown />
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => {
+                setOpen("upload");
+                document.body.style.overflow = "hidden";
+              }}
+            >
+              <AiOutlineUpload className="w-6 h-6" title="upload media" />
+            </button>
+            <UserDropdown />
+            {open === "upload" && (
+              <Suspense fallback={<p>loading</p>}>
+                <UploadModal
+                  closeModal={() => {
+                    setOpen("none");
+                    document.body.style.overflow = "auto";
+                  }}
+                />
+              </Suspense>
+            )}
+          </div>
         ) : (
           <>
             <button
               onClick={() => {
-                setOpen(true);
+                setOpen("signin");
                 document.body.style.overflow = "hidden";
               }}
             >
               Log in
             </button>
-            {open && (
+            {open === "signin" && (
               <Suspense fallback={<p>loading</p>}>
                 <SignIn
                   closeModal={() => {
-                    setOpen(false);
+                    setOpen("none");
                     document.body.style.overflow = "auto";
                   }}
                 />
