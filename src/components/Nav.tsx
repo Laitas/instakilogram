@@ -27,7 +27,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 flex justify-between px-6 py-4 bg-white w-full shadow">
+    <nav className="sticky top-0 flex justify-between px-6 py-4 bg-white w-full shadow z-10">
       <Link href={"/"}>
         <a className="flex gap-4 items-center">
           <BsInstagram className="w-8 h-8" />

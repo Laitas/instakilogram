@@ -29,15 +29,21 @@ const Hero = ({ user }: { user: User }) => {
         <div className="flex gap-4">
           <p>
             Following:{" "}
-            <span className="font-semibold">{formatter.format(1234123)}</span>
+            <span className="font-semibold">
+              {formatter.format(user.following)}
+            </span>
           </p>
           <p>
             Followers:{" "}
-            <span className="font-semibold">{formatter.format(1234123)}</span>
+            <span className="font-semibold">
+              {formatter.format(user.followers)}
+            </span>
           </p>
           <p>
             Posts:{" "}
-            <span className="font-semibold">{formatter.format(1234123)}</span>
+            <span className="font-semibold">
+              {formatter.format(user.posts)}
+            </span>
           </p>
         </div>
         <p>
@@ -56,4 +62,7 @@ type User = {
   id: string;
   image: string;
   name: string;
+  followers: number;
+  following: number;
+  posts: number;
 };

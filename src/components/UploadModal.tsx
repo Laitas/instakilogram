@@ -1,12 +1,15 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState, useRef, ChangeEvent, FormEvent } from "react";
+import { useQueryClient } from "react-query";
 import useOnClickOutside from "../hooks/useOutsideClick";
 import { trpc } from "../utils/trpc";
 
 const UploadModal = ({ closeModal }: { closeModal: () => void }) => {
   const [file, setFile] = useState<File>();
   const ref = useRef(null);
+  const router = useRouter();
   const descRef = useRef<HTMLTextAreaElement>(null);
   useOnClickOutside(ref, closeModal);
   const { data: session } = useSession();
@@ -14,13 +17,19 @@ const UploadModal = ({ closeModal }: { closeModal: () => void }) => {
     if (!e.target.files) return;
     setFile(e.target.files[0]);
   };
+  const queryClient = useQueryClient();
 
   const { mutate } = trpc.useMutation("media.upload", {
     onError: (err) => {
       console.log(err);
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      if (router.asPath === `/user/${session?.user?.id}`) {
+        queryClient.invalidateQueries("media.getAll");
+        closeModal();
+      } else {
+        router.push(`/user/${session?.user?.id}`);
+      }
     },
   });
 
@@ -62,6 +71,7 @@ const UploadModal = ({ closeModal }: { closeModal: () => void }) => {
               <button className="shadow px-1 py-2">Upload</button>
               <button
                 type="button"
+                onClick={closeModal}
                 className="shadow px-1 py-2 bg-red-500 text-white"
               >
                 Cancel

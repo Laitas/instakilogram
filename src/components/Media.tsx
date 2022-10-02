@@ -8,9 +8,9 @@ const Media = () => {
   const { data } = trpc.useQuery(["media.getAll", { id: id as string }]);
 
   return (
-    <main className="grid grid-cols-4">
+    <main className="grid grid-cols-4 gap-6 my-6">
       {data?.posts.map((img) => (
-        <div key={img.id} className="relative h-64">
+        <div key={img.id} className="relative h-64 border">
           <Image
             src={img.url}
             alt={img.desc ?? ""}

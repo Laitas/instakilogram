@@ -12,6 +12,9 @@ export const mediaRouter = createRouter()
         where: {
           userId: input?.id,
         },
+        orderBy: {
+          uploadedAt: "desc",
+        },
       });
       if (posts) {
         return {

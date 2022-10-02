@@ -61,13 +61,14 @@ model User {
 }
 
 model Post {
-    id       String    @id @default(cuid())
-    url      String
-    User     User?     @relation(fields: [userId], references: [id])
-    Comments Comment[]
-    desc     String?
-    userId   String?
-    Likes    Int       @default(0)
+    id         String    @id @default(cuid())
+    url        String
+    User       User?     @relation(fields: [userId], references: [id])
+    Comments   Comment[]
+    desc       String?
+    userId     String?
+    Likes      Int       @default(0)
+    uploadedAt DateTime  @default(now())
 }
 
 model Comment {

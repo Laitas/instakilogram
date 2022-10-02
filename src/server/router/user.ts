@@ -17,12 +17,24 @@ export const userRouter = createRouter()
         where: {
           id: input?.id,
         },
+        include: {
+          _count: {
+            select: {
+              posts: true,
+              followers: true,
+              following: true,
+            },
+          },
+        },
       });
       if (user) {
         return {
           id: user.id,
           image: user.image,
           name: user.name,
+          posts: user._count.posts,
+          followers: user._count.followers,
+          following: user._count.following,
         };
       } else {
         throw new trpc.TRPCError({
