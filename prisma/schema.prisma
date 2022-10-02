@@ -67,6 +67,7 @@ model Post {
     Comments Comment[]
     desc     String?
     userId   String?
+    Likes    Int       @default(0)
 }
 
 model Comment {

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Hero from "../../components/Hero";
 import Layout from "../../components/Layout";
+import Media from "../../components/Media";
 import { trpc } from "../../utils/trpc";
 
 const Id = () => {
@@ -20,7 +21,16 @@ const Id = () => {
     }
   );
 
-  return <Layout>{data && <Hero user={data} />}</Layout>;
+  return (
+    <Layout>
+      {data && (
+        <>
+          <Hero user={data} />
+          <Media />
+        </>
+      )}
+    </Layout>
+  );
 };
 
 export default Id;
