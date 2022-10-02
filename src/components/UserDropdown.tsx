@@ -3,17 +3,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import useOnClickOutside from "../hooks/useOutsideClick";
+import { trpc } from "../utils/trpc";
 
 const UserDropdown = () => {
-  const { data } = useSession();
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
   const ref = useRef(null);
   useOnClickOutside(ref, () => setOpen(false));
+
+  const { data } = trpc.useQuery(
+    [
+      "user.get",
+      {
+        id: session?.user?.id as string,
+      },
+    ],
+    {
+      onError: () => signOut(),
+      retry: 0,
+    }
+  );
   return (
     <div className="relative" ref={ref}>
       <button onClick={() => setOpen(!open)}>
         <Image
-          src={data?.user?.picture as string}
+          src={data?.image as string}
           width={30}
           height={30}
           className="rounded-full"
@@ -27,7 +41,7 @@ const UserDropdown = () => {
       >
         <ul className="flex flex-col gap-4">
           <li className="hover:text-blue-500 transition-colors">
-            <Link href={`/user/${data?.user?.id}`}>
+            <Link href={`/user/${data?.id}`}>
               <a>Profile</a>
             </Link>
           </li>
