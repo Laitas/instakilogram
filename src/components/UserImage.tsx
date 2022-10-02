@@ -74,7 +74,7 @@ const UserImage = ({ img }: { img: string }) => {
             height={200}
             alt="user image"
             className="rounded-full -z-[1]"
-            objectFit="contain"
+            objectFit="cover"
           />
         )}
       </div>
@@ -87,7 +87,7 @@ const UserImage = ({ img }: { img: string }) => {
         height={200}
         alt="user image"
         className="rounded-full"
-        objectFit="contain"
+        objectFit="cover"
       />
     );
   }
