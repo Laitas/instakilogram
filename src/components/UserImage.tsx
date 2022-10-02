@@ -51,17 +51,18 @@ const UserImage = ({ img }: { img: string }) => {
   if (session?.user?.id === id) {
     return (
       <div className="group relative">
-        <input
-          type="file"
-          className="absolute inset-0 z-10 rounded-full opacity-0 cursor-pointer"
-          aria-label="visually hidden upload button"
-          onChange={(e) => e.target.files && setFile(e.target.files[0])}
-        />
-        <div className="bg-black bg-opacity-0 group-hover:bg-opacity-70 w-full h-full absolute rounded-full flex flex-col justify-center duration-300 transition-colors">
+        <label className="bg-black bg-opacity-0 focus:bg-opacity-70 group-hover:bg-opacity-70 w-full h-full absolute rounded-full flex flex-col justify-center duration-300 transition-colors">
           <span className="opacity-0 text-white group-hover:opacity-100 text-center">
             Change
           </span>
-        </div>
+
+          <input
+            type="file"
+            className="absolute inset-0 z-10 rounded-full opacity-0 cursor-pointer"
+            aria-label="visually hidden upload button"
+            onChange={(e) => e.target.files && setFile(e.target.files[0])}
+          />
+        </label>
         {loading ? (
           <span className="w-[200px] h-[205px] flex flex-col justify-center text-center">
             Loading
