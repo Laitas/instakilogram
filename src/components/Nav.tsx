@@ -14,7 +14,6 @@ const UploadModal = dynamic(() => import("./UploadModal"), {
 const Nav = () => {
   const [open, setOpen] = useState<"none" | "signin" | "upload">("none");
   const { status } = useSession();
-  console.log(open);
 
   useEffect(() => {
     const useEsc = (e: KeyboardEvent) => {

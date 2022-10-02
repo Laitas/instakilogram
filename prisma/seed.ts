@@ -10,8 +10,8 @@ const main = async () => {
   await prisma.user.create({
     data: {
       name: "Laitas",
-      email: "Laitas@insta.com",
-      password: hashPassword("Laitas"),
+      email: "laitas@insta.com",
+      password: hashPassword("laitas"),
     },
   });
 };

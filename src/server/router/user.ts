@@ -41,9 +41,9 @@ export const userRouter = createRouter()
     async resolve({ ctx, input }) {
       return await ctx.prisma.user.create({
         data: {
-          email: input?.email,
+          email: input?.email.toLowerCase(),
           name: input?.name,
-          password: hashPassword(input?.password),
+          password: hashPassword(input?.password.toLowerCase()),
         },
       });
     },
@@ -56,7 +56,7 @@ export const userRouter = createRouter()
     async resolve({ ctx, input }) {
       const user = await ctx.prisma.user.findUnique({
         where: {
-          email: input.email,
+          email: input.email.toLowerCase(),
         },
         select: {
           id: true,
@@ -66,7 +66,13 @@ export const userRouter = createRouter()
           password: true,
         },
       });
-      if (user && user.password == hashPassword(input.password))
+      if (!user) {
+        throw new trpc.TRPCError({
+          code: "UNAUTHORIZED",
+          message: "No such user found",
+        });
+      }
+      if (user && user.password == hashPassword(input.password.toLowerCase()))
         return {
           id: user.id,
           name: user.name,
