@@ -43,4 +43,20 @@ export const mediaRouter = createRouter()
         },
       });
     },
+  })
+  .mutation("uploadAvi", {
+    input: z.object({
+      url: z.string(),
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          image: input.url,
+        },
+      });
+    },
   });

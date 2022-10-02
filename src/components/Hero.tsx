@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
+import UserImage from "./UserImage";
 
 const Hero = ({ user }: { user: User }) => {
   const { id } = useRouter().query;
@@ -9,14 +9,7 @@ const Hero = ({ user }: { user: User }) => {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return (
     <header className="my-6 flex gap-4">
-      <Image
-        src={user.image}
-        width={200}
-        height={200}
-        alt="user image"
-        className="rounded-full"
-        objectFit="contain"
-      />
+      <UserImage img={user.image} />
       <section className="flex flex-col gap-2 flex-1">
         <div className="flex gap-8 items-center">
           <h2 className="font-semibold text-xl">{user.name}</h2>
